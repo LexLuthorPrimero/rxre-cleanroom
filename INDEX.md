@@ -10,6 +10,17 @@ en el autor.
 - Funciones: `filenvercmp` @ vaddr `0x4fa0`, `verrevcmp` @ `0x4b60`, `file_prefixlen` @ `0x4a80`.
 - Corpus y oráculo: **propios y sintéticos** (nada de GNU coreutils); el oráculo se generó llamando al propio binario nativo mediante `mmap` (no se leyó ni derivó código fuente GPL).
 
+## ¿Puedes refutarlo? (help wanted)
+
+Buscamos **verificadores ciegos** — cualquiera con una máquina Linux y 10 minutos.
+
+- Sin registro, sin cuenta, sin coste. Tu dictamen va en un issue (#1).
+- Ya sea confirmar (`VERIFICADO_POR_TERCERO`) o refutar (`NO_REPRODUCE`), ambas aportan.
+- Requisitos: `gcc` o `clang`, `python3`, `sha256sum`.
+- Pasos y plantilla: [`OUTREACH.md`](OUTREACH.md) + paso 5 de abajo.
+
+El reto: https://github.com/LexLuthorPrimero/rxre-cleanroom/issues/1
+
 ## Qué demuestra (con verificación propia del autor)
 
 - El corpus sellado de 20261112 (34.145 pares) y el de 20261113 (34.145 pares) coinciden **al 100 %** entre la reconstrucción `src/filenvercmp.c` y el oráculo nativo (`oracle/matrix_native*.txt`).
