@@ -1,0 +1,32 @@
+RXRE clean-room — LICENSE
+
+Los archivos de este paquete son obra propia del autor (Lucas) y se publican bajo MIT:
+
+MIT License
+
+Copyright (c) 2026 Lucas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+NOTICE:
+- Este paquete NO redistribuye código fuente de GNU coreutils ni de otros proyectos GPL.
+- `/usr/bin/ls` se usa únicamente como oráculo en tiempo de ejecución (mmap, solo lectura) por quien reproduzca el procedimiento.
+- El corpus y las matrices son datos sintéticos propios del autor.
+- Este artefacto es EXPERIMENTAL: no es software de producción ni promesa de soporte.
+- El autor declara que la verificación por terceros NO ha tenido lugar todavía; este paquete está preparado para que cualquier tercero la ejecute (ver OUTREACH.md).
