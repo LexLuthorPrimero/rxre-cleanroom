@@ -21,6 +21,18 @@ Buscamos **verificadores ciegos** — cualquiera con una máquina Linux y 10 min
 
 El reto: https://github.com/LexLuthorPrimero/rxre-cleanroom/issues/1
 
+## Segundo milestone: `wc` (versión UTF-8)
+
+Además del desafío `filenvercmp`, el paquete incluye el subpaquete **`wc/`**:
+reconstrucción semántica de `/usr/bin/wc` (GNU coreutils 9.10) verificada en **ambas locales**
+(LC_ALL=C y es_AR.utf8), con 35.000+ casos sellados, 0 divergencias. Cobertura:
+salida default `(L W B)`, flags `{default,-c,-l,-w,-L}` combinaciones, bytes altos/NBSP,
+UTF-8 multibyte, `-m == byte count en LC_ALL=C`.
+
+Verificación productiva: el corpus `wc` vive bajo `wc/corpus/` con sus matrices selladas por
+kernel propio, regenerables con el harness hermano `verify2`. El índice específico está en
+[`wc/INDEX.md`](wc/INDEX.md).
+
 ## Qué demuestra (con verificación propia del autor)
 
 - El corpus sellado de 20261112 (34.145 pares) y el de 20261113 (34.145 pares) coinciden **al 100 %** entre la reconstrucción `src/filenvercmp.c` y el oráculo nativo (`oracle/matrix_native*.txt`).
