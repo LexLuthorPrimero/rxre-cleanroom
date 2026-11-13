@@ -26,8 +26,8 @@ cd rxre-cleanroom
 ./verify.sh
 ```
 
-Fail-closed, 8 etapas: integridad `SHA256SUMS` (raíz + `wc/`), identidad nativa
-(`/usr/bin/ls`/`/usr/bin/wc` por SHA-256; cualquier otra coincidencia aborta), build,
+Fail-closed, 11 etapas: integridad `SHA256SUMS` (raíz + `wc/`), identidad nativa
+(`/usr/bin/ls`, `/usr/bin/wc`, `/usr/bin/fold`, `/usr/bin/tr`, `/usr/bin/dirname` por SHA-256; cualquier otra coincidencia aborta), build,
 2 generaciones (34.145×2) + challenge corpus (3.100 + 141 idénticos = 3.241), invariancia de locale
 (C ≡ es_AR.utf8, gen 1+2 byte-equal), i18n black-box (200 nombres UTF-8), y los 11
 corpora de wc. Cola esperada: `VERIFY: all steps passed`. Requisitos: Linux x86_64,
@@ -42,7 +42,7 @@ gcc -std=c11 -O2 -o verify2 harness/verify2.c src/filenvercmp.c
 # total=34145 mismatches=0
 ```
 
-**v1.5.0**: alineado con `rxre-engine v1.5.0` — **FIVE bounded targets** sellados (filenvercmp, wc, fold, tr, **dirname** — 1.917/1.901, 0 divergencias). **v1.3.8**: fold multi-width (6 gated regens). **Novedad v1.3.0**: `verify.sh` único; matrices de locale selladas. Los corpora `--files0-from` permanecen en zona 9/10 con fichas sintéticas no redistribuidas. Verificación de terceros sigue **NOT_EXECUTED** (issue #1).
+**v1.5.1**: coherencia con `rxre-engine v1.5.1` (README y QUICKSTART sincronizados; motor espera ahora 72 passed/2 skipped). **v1.5.0**: **FIVE bounded targets** sellados (filenvercmp, wc, fold, tr, **dirname** — 1.917/1.901, 0 divergencias). **v1.3.8**: fold multi-width (6 gated regens). **Novedad v1.3.0**: `verify.sh` único; matrices de locale selladas. Los corpora `--files0-from` permanecen en zona 9/10 con fichas sintéticas no redistribuidas. Verificación de terceros sigue **NOT_EXECUTED** (issue #1).
 
 ## Contenido
 
@@ -80,5 +80,5 @@ Verificación fresca (clone nuevo, sin estado previo) — todos los runs dan `0 
 
 ## Proyectos relacionados
 
-- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.5.0](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.5.0) (snapshot actual: 4 bounded targets, verification fail-closed; verification fail-closed; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
+- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.5.1](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.5.1) (snapshot actual: 4 bounded targets, verification fail-closed; verification fail-closed; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
 - Protocolo seal-before-reveal y roadmap: `PROTOCOL.md`, `OUTREACH.md` (cómo reportar en issue #1)

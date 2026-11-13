@@ -1,5 +1,7 @@
 # RXRE clean-room — reconstrucción verificable de `filenvercmp` / `filevercmp`
 
+(Milestones sellados: filenvercmp, wc, fold, tr, dirname.)
+
 Reconstrucción semántica, escrita a mano a partir del desensamblado de `/usr/bin/ls`
 (GNU coreutils 9.10), de la función `filenvercmp` y de sus subfunciones
 `verrevcmp` y `file_prefixlen`, junto con un protocolo de verificación diferencial
