@@ -82,6 +82,10 @@ Locale-invariance filenvercmp: `wc/SEAL_H14.txt`.
 - `files0-from`: resultados sellados pero las fichas sintéticas NO se redistribuyen; documentado como no reejecutable desde clon.
 - Alineación de paquetes con `rxre-engine v1.3.0` (mismo día que su publicación). Verificación de terceros: NOT_EXECUTED (issue #1).
 
+## v1.3.8 (2026-11-13)
+
+- Alineado con `rxre-engine v1.3.8`: milestone `fold` ampliado multi-width — -w 4 ×2 seeds + -w 1/2/3/8 (1.054 c/u), 6 regeneraciones selladas/gated, 0 divergencias. Sin cambios funcionales en los milestones anteriores. Terceros: NOT_EXECUTED (issue #1).
+
 ## v1.3.7 (2026-11-13)
 
 - Alineado con `rxre-engine v1.3.7`: **tercer objetivo sellado (`fold`)** incluido en el paquete (corpus 2×2.554, seeds 20261113/14, verify.sh con etapa 7/9 + fail-closed identidad `/usr/bin/fold` sha256 95030461…). Sin cambios funcionales en milestones anteriores. Terceros: NOT_EXECUTED (issue #1).

@@ -1,5 +1,5 @@
 #!/bin/sh
-# verify.sh — rxre-cleanroom v1.3.7 — verificación única, fail-closed.
+# verify.sh — rxre-cleanroom v1.3.8 — verificación única (fold multi-width), fail-closed.
 # Reproduce: integridad del paquete, identidad nativa del oráculo, build +
 # diferencial (2 generaciones + challenge corpus), invariancia de locale,
 # i18n black-box, los 11 corpora de wc y la propiedad "fold -w 4" (etapa 3).
@@ -54,10 +54,18 @@ cmp "$TMP/i18n.out" "$ROOT/filenvercmp_i18n/oracle_lsAv_i18n.txt"
 cmp "$TMP/i18n.out" "$ROOT/filenvercmp_i18n/reconstructed_sorted_i18n.txt"
 echo "i18n black-box OK (byte-identical)"
 
-echo "== 7/9  fold — etapa 3 (cell width): build + 2 sealed gens vs oracle =="
+echo "== 7/9  fold — etapa 3 (cell width): build + 6 gated regens vs oracle =="
 gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/foldwrap" fold_20261113/foldwrap.c
 "$TMP/foldwrap" fold_20261113/cases_fold_seed20261113.txt 4
 "$TMP/foldwrap" fold_20261113/cases_fold_seed20261114.txt 4
+"$TMP/foldwrap" fold_20261113/cases_fold_w1_seed20261115.txt 1
+"$TMP/foldwrap" fold_20261113/cases_fold_w2_seed20261116.txt 2
+"$TMP/foldwrap" fold_20261113/cases_fold_w3_seed20261117.txt 3
+"$TMP/foldwrap" fold_20261113/cases_fold_w8_seed20261122.txt 8
+"$TMP/foldwrap" fold_20261113/cases_fold_w1_seed20261115.txt 1
+"$TMP/foldwrap" fold_20261113/cases_fold_w2_seed20261116.txt 2
+"$TMP/foldwrap" fold_20261113/cases_fold_w3_seed20261117.txt 3
+"$TMP/foldwrap" fold_20261113/cases_fold_w8_seed20261122.txt 8
 
 echo "== 8/9  wc: build + 11 corpora (LC_ALL=C y es_AR.utf8) =="
 gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/verify_wc" "$ROOT/wc/src/wc_count.c" "$ROOT/wc/harness/verify_wc.c"

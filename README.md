@@ -18,7 +18,7 @@ La verificación **de terceros/ciega NO se ha ejecutado**. La única puerta que 
 ciclo R3 son lecturas independientes — abre o comenta
 [el issue #1](https://github.com/LexLuthorPrimero/rxre-cleanroom/issues/1).
 
-## Verifica en un comando (v1.3.7)
+## Verifica en un comando (v1.3.8)
 
 ```sh
 git clone https://github.com/LexLuthorPrimero/rxre-cleanroom
@@ -42,7 +42,7 @@ gcc -std=c11 -O2 -o verify2 harness/verify2.c src/filenvercmp.c
 # total=34145 mismatches=0
 ```
 
-**v1.3.2**: alineado con `rxre-engine v1.3.2` (audit-hardening F1–F4 + Phase 5 decoupling; paquete limpio re-sellado; misma verificación fail-closed). **Novedad v1.3.0**: `verify.sh` único; matrices de locale selladas (`oracle/matrix_native_es_AR_utf8{,_20261113}.txt`); textos coherentes con el paquete hermano. Verificación de terceros sigue **NOT_EXECUTED** (issue #1). Los corpora `--files0-from` permanecen sellados en `wc/SEAL_WC.txt` pero las 5.200 fichas sintéticas no se redistribuyen: esa rama no es reejecutable desde un clon fresco (documentado en el paso 8/8 de `verify.sh`).
+**v1.3.8**: alineado con `rxre-engine v1.3.8` (fold multi-width: 6 gated regens -w 1/2/3/4/8, 0 divergencias). **v1.3.7**: tercer objetivo sellado `fold` (2×2.554, 0 divergencias). **Novedad v1.3.0**: `verify.sh` único; matrices de locale selladas. Los corpora `--files0-from` permanecen en zona 8/9 con fichas sintéticas no redistribuidas. Verificación de terceros sigue **NOT_EXECUTED** (issue #1).
 
 ## Contenido
 
@@ -62,7 +62,7 @@ gcc -std=c11 -O2 -o verify2 harness/verify2.c src/filenvercmp.c
 | filenvercmp **i18n challenge** (adversarial exterior) | 3.100 + 141 idénticos = 3.241 | 0 | es_AR.utf8 |
 | wc **`--files0-from`** default/`-l`/`-m`/folds | 3.000 files (20261127) | 0 | C + es_AR.utf8 |
 | wc **adversarial fuzz** `--files0-from` | 2.200 files (20261128) | 0 | C + es_AR.utf8 |
-| **fold** (third sealed target) | 2×2.554 (20261113/14) | 0 | `-w 4`, C + UTF-8 clases |
+| **fold** (third sealed target) | 2×2.554 + 4 gated (w=1/2/3/8) (seeds 15/16/17/22) | 0 | cell width, tab stop 8 |
 
 Total general: **170.000+** case-checks sellados, 0 divergencias (bit-audit 256/256 en LC_ALL=C aparte).
 
@@ -78,5 +78,5 @@ Verificación fresca (clone nuevo, sin estado previo) — todos los runs dan `0 
 
 ## Proyectos relacionados
 
-- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.3.7](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.3.7) (snapshot actual: 3 bounded targets incl. fold -w 4; verification fail-closed; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
+- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.3.8](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.3.8) (snapshot actual: 3 bounded targets incl. fold multi-width; verification fail-closed; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
 - Protocolo seal-before-reveal y roadmap: `PROTOCOL.md`, `OUTREACH.md` (cómo reportar en issue #1)
