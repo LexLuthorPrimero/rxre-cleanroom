@@ -99,8 +99,7 @@ static wc_count count_utf8(const unsigned char *s, size_t n) {
     size_t i = 0;
     while (i < n) {
         unsigned cp; int len = utf8_decode(s + i, n - i, &cp);
-        if (len == 0) { len = 1; cp = 0xfffd; }
-        r.chars++;
+        if (len == 0) { len = 1; cp = 0xfffd; } else { r.chars++; }
         if (cp == 0x0a) { r.lines++; if (cur > r.max_line) r.max_line = cur; cur = 0; in_word = 0; }
         else if (is_unicode_space_cp(cp)) {
             in_word = 0;

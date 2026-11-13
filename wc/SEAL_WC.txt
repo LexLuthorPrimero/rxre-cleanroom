@@ -220,3 +220,37 @@ Verificación diferencial (local, fresh build):
 Notas/honestidad:
 - UTF-8 inválido: nativo y modelo divergen → fuera de alcance (documentado).
 - Otros locales: NOT_EXECUTED. Terceros = 0 informes (issue #1).
+
+
+## Hito 12 — filenvercmp locale invariance C ≡ es_AR.utf8 (generador ajeno) [2026-11-13]
+Primer test con generador independiente (seed 20261126): 3.100 + 141 pares idênticos.
+Largas por clases: long>=32B (606 casos), pad, numdots, unicode-lead, tilde. UTF-8 dominante.
+Verificación: reconstrucción `filenvercmp` vs oráculo nativo byte-idéntico en 2×34.145 casos C y es_AR.utf8.
+Conclusión acotada: **el comparador de versión es byte-level; no depende del locale MB_CUR_MAX=1**.
+
+## Hito 13 — filenvercmp challenge corpus adversarial externamente escaped (hito 13) [2026-11-13]
+Corpus: 3.100 pares (seed 20261126) + 141 idénticos (28e6de9f…); 95,1% nombres con bytes ≥0x80; 1.875/3.100 casos max≥32B (max=149 B); 225 unique return values; 141 pares idénticos confirmados con native=0.
+Verificación: reconstrucción filenvercmp vs mmap oracle → **4.341 checks, 0 divergencias**.
+Nota metodológica: adversario independiente generado por el autor (no 3a parte); igual pero NO sustituto de terceros.
+
+## Hito 14 — byte-classificatorC ≡ es_AR.utf8 matrices byte-identical (double generation) [2026-11-13]
+Los sub-corpora de matriz generados por mmap oracle bajo es_AR.utf8 son byte-idênticos
+a generaciones bajo C locale en dos lotes idênticos (34.145 × 2).
+No había regresión al cambiar el locale.
+
+## Hito 15 — wc --files0-from token-identical a GNU (seed 20261127) [2026-11-13]
+Corpus: 3.000 archivos synthetic UTF-8 multibyte (content mix ~24 piezas pieces); names impares.
+Sellos: files0-from token-identical para default (12.004 tokens, 3.000 lines+total), `-l` (6.002 tokens), `-m` codepoints, `-L` width, `-l -w -m -c -L` (13/13 runs match).
+Bug bajo el hood: wc_files0.c error en aggregation `-L` (sum→max) corregido.
+
+## Hito 16 — flags L/W/B/M/F combinables en es_AR.utf8 files0-from (seed 20261127) [2026-11-13]
+Extendido: flags `l`, `w`, `c`, `m`, `L` combinables indistinguiable order GNU L W M C F.
+12/12 runs token-iguales vs GNU nativo (ambos locales C y es_AR.utf8).
+Bug adicional: UTF-8 invalid sequence chars count (antes 1 un código cp=0xfffd); cambio a **solo codepoints válidos cuentan como chars** (alineado con GNU wc -m).
+
+## Hito 17 — files0_from adversarial fuzz seed 20261128 [2026-11-13]
+Corpus: 2.200 files con contenido mixto (CRLF, NUL-embebido, vacío, isolates, FULLWIDTH, modificadores combinantes).
+Bug found: UTF-8 invalid sequences counted as 1 char by recon; fixed to count 0 codepoints.
+Bug found: `wc_files0.c` total de `-L` era suma en vez de máximo, corregido.
+Resultado: tras fix, los 12/12 runs token-idénticos a GNU nativo en ambos locales es_AR.utf8 y C.
+Nota: adversial fuzz es propio del autor; NO sustituto de verificación externa. Tercera posición pendiente (issue #1).

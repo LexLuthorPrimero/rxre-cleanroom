@@ -43,8 +43,12 @@ gcc -std=c11 -O2 -o verify_f harness/verify_recon.c src/filenvercmp.c && \
 | wc **`-m`** multibyte | 1.526 (20261121) | 0 | es_AR.utf8 |
 | wc **`-L`** tabla real Unicode | 1.523 (20261123) | 0 | es_AR.utf8 |
 | wc **flags × multibyte** (14 sets) | 18.592 (20261125) | 0 | es_AR.utf8 |
+| filenvercmp **locale-invariance** byte-idéntico | 2×34.145 | byte-equal | C **y** es_AR.utf8 |
+| filenvercmp **i18n challenge** (adversarial exterior) | 3.100 + 141 | 0 | es_AR.utf8 |
+| wc **`--files0-from`** default/`-l`/`-m`/folds | 3.000 files (20261127) | 0 | C + es_AR.utf8 |
+| wc **adversarial fuzz** `--files0-from` | 2.200 files (20261128) | 0 | C + es_AR.utf8 |
 
-Total general: **129.424** case-checks sellados, 0 divergencias (bit-audit 256/256 en LC_ALL=C aparte).
+Total general: **170.000+** case-checks sellados, 0 divergencias (bit-audit 256/256 en LC_ALL=C aparte).
 
 Verificación fresca (clone nuevo, sin estado previo) — todos los runs dan `0 divergencias`:
 `wc/harness/verify_{wc,m,L,flags}.c`.
