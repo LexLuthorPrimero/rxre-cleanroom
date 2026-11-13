@@ -28,7 +28,7 @@ cd rxre-cleanroom
 
 Fail-closed, 8 etapas: integridad `SHA256SUMS` (raíz + `wc/`), identidad nativa
 (`/usr/bin/ls`/`/usr/bin/wc` por SHA-256; cualquier otra coincidencia aborta), build,
-2 generaciones (34.145×2) + challenge corpus (3.100 + 3.241), invariancia de locale
+2 generaciones (34.145×2) + challenge corpus (3.100 + 141 idénticos = 3.241), invariancia de locale
 (C ≡ es_AR.utf8, gen 1+2 byte-equal), i18n black-box (200 nombres UTF-8), y los 11
 corpora de wc. Cola esperada: `VERIFY: all steps passed`. Requisitos: Linux x86_64,
 gcc, `sha256sum`, GNU coreutils con los hashes sellados.
@@ -59,7 +59,7 @@ gcc -std=c11 -O2 -o verify2 harness/verify2.c src/filenvercmp.c
 | wc **`-L`** tabla real Unicode | 1.523 (20261123) | 0 | es_AR.utf8 |
 | wc **flags × multibyte** (14 sets) | 18.592 (20261125) | 0 | es_AR.utf8 |
 | filenvercmp **locale-invariance** byte-idéntico | 2×34.145 | byte-equal | C **y** es_AR.utf8 |
-| filenvercmp **i18n challenge** (adversarial exterior) | 3.100 + 141 | 0 | es_AR.utf8 |
+| filenvercmp **i18n challenge** (adversarial exterior) | 3.100 + 141 idénticos = 3.241 | 0 | es_AR.utf8 |
 | wc **`--files0-from`** default/`-l`/`-m`/folds | 3.000 files (20261127) | 0 | C + es_AR.utf8 |
 | wc **adversarial fuzz** `--files0-from` | 2.200 files (20261128) | 0 | C + es_AR.utf8 |
 
