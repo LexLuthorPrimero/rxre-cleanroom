@@ -18,16 +18,31 @@ La verificación **de terceros/ciega NO se ha ejecutado**. La única puerta que 
 ciclo R3 son lecturas independientes — abre o comenta
 [el issue #1](https://github.com/LexLuthorPrimero/rxre-cleanroom/issues/1).
 
-## Verifica con tus manos (2 min)
+## Verifica en un comando (v1.3.0)
 
 ```sh
 git clone https://github.com/LexLuthorPrimero/rxre-cleanroom
 cd rxre-cleanroom
+./verify.sh
+```
+
+Fail-closed, 8 etapas: integridad `SHA256SUMS` (raíz + `wc/`), identidad nativa
+(`/usr/bin/ls`/`/usr/bin/wc` por SHA-256; cualquier otra coincidencia aborta), build,
+2 generaciones (34.145×2) + challenge corpus (3.100 + 3.241), invariancia de locale
+(C ≡ es_AR.utf8, gen 1+2 byte-equal), i18n black-box (200 nombres UTF-8), y los 11
+corpora de wc. Cola esperada: `VERIFY: all steps passed`. Requisitos: Linux x86_64,
+gcc, `sha256sum`, GNU coreutils con los hashes sellados.
+
+Manual (lo de siempre, auditable paso a paso):
+
+```sh
 sha256sum -c SHA256SUMS
-gcc -std=c11 -O2 -o verify_f harness/verify_recon.c src/filenvercmp.c && \
-  ./verify_f oracle/cases_seed20261112.txt oracle/matrix_native.txt
+gcc -std=c11 -O2 -o verify2 harness/verify2.c src/filenvercmp.c
+./verify2 oracle/cases_seed20261112.txt oracle/matrix_native.txt
 # total=34145 mismatches=0
 ```
+
+**Novedad v1.3.0**: `verify.sh` único; matrices de locale selladas (`oracle/matrix_native_es_AR_utf8{,_20261113}.txt`); textos coherentes con el paquete hermano. Verificación de terceros sigue **NOT_EXECUTED** (issue #1). Los corpora `--files0-from` permanecen sellados en `wc/SEAL_WC.txt` pero las 5.200 fichas sintéticas no se redistribuyen: esa rama no es reejecutable desde un clon fresco (documentado en el paso 8/8 de `verify.sh`).
 
 ## Contenido
 
@@ -62,5 +77,5 @@ Verificación fresca (clone nuevo, sin estado previo) — todos los runs dan `0 
 
 ## Proyectos relacionados
 
-- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine
+- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.3.0](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.3.0) (zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
 - Protocolo seal-before-reveal y roadmap: `PROTOCOL.md`, `OUTREACH.md` (cómo reportar en issue #1)

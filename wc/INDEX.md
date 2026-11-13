@@ -57,7 +57,8 @@ cd filenvercmp_i18n && gcc -std=c11 -O2 -o sort_names sort_names.c ../reconstruc
 
 **Challenge corpus externo (filenvercmp i18n/CRLF)**:
 ```sh
-cd oracle && gcc -std=c11 -O2 -o verify_challenge matrix_gen.c && ./verify_challenge cases_challenge_seed20261126.txt matrix_challenge.txt
+gcc -std=c11 -O2 -o verify2 harness/verify2.c src/filenvercmp.c
+./verify2 oracle/cases_challenge_seed20261126.txt oracle/matrix_challenge.txt
 ```
 
 ## Sello criptográfico
@@ -73,6 +74,13 @@ Locale-invariance filenvercmp: `wc/SEAL_H14.txt`.
 - **Generalización multiplataforma** (OSET2: x86_64, aarch64, RISC-V): NOT_EXECUTED.
 - **Soporte completo de todas las banderas GNU** (`--files0-from` + flags completos + `--si`, `--apparent-size`, `--no-dereference`): NOT_EXECUTED.
 - **Producción**: contrato semántico verificado por diferencial sellado, no drop-in.
+
+## v1.3.0 (2026-11-13)
+
+- verify.sh único en raíz del paquete (fail-closed; ver README de este repo): identidad nativa + 2 generaciones + challenge + locale invariance + i18n + 11 corpora wc.
+- Matrices de invariancia de locale trasladadas y selladas en raíz: `oracle/matrix_native_es_AR_utf8.txt` (`ed5e91ef…`) y `oracle/matrix_native_es_AR_utf8_20261113.txt` (`e031d3ed…`) — idénticas a las del engine v1.3.0.
+- `files0-from`: resultados sellados pero las fichas sintéticas NO se redistribuyen; documentado como no reejecutable desde clon.
+- Alineación de paquetes con `rxre-engine v1.3.0` (mismo día que su publicación). Verificación de terceros: NOT_EXECUTED (issue #1).
 
 ## NOXES de este release (v1.2.0)
 
