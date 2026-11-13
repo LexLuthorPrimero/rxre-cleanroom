@@ -78,9 +78,13 @@ Locale-invariance filenvercmp: `wc/SEAL_H14.txt`.
 ## v1.3.0 (2026-11-13)
 
 - verify.sh único en raíz del paquete (fail-closed; ver README de este repo): identidad nativa + 2 generaciones + challenge + locale invariance + i18n + 11 corpora wc.
-- Matrices de invariancia de locale trasladadas y selladas en raíz: `oracle/matrix_native_es_AR_utf8.txt` (`ed5e91ef…`) y `oracle/matrix_native_es_AR_utf8_20261113.txt` (`e031d3ed…`) — idénticas a las del engine v1.3.0.
+- Matrices de invariancia de locale trasladadas y selladas en raíz: `oracle/matrix_native_es_AR_utf8.txt` (`ed5e91ef…`) y `oracle/matrix_native_es_AR_utf8_20261113.txt` (`e031d3ed…`) — idénticas a las del engine v1.3.0+.
 - `files0-from`: resultados sellados pero las fichas sintéticas NO se redistribuyen; documentado como no reejecutable desde clon.
 - Alineación de paquetes con `rxre-engine v1.3.0` (mismo día que su publicación). Verificación de terceros: NOT_EXECUTED (issue #1).
+
+## v1.3.2 (2026-11-13)
+
+- Alineación de paquetes con `rxre-engine v1.3.2` (audit-hardening F1–F4 + Phase 5 decoupling). No hay cambios funcionales en el cleanroom: mismo corpus sellado, mismo `verify.sh` fail-closed, mismos hashes de oráculo/verifiers. Solo textos coherentes con el hermano y sellos regenerados. Verificación de terceros: NOT_EXECUTED (issue #1).
 
 ## NOXES de este release (v1.2.0)
 

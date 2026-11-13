@@ -18,7 +18,7 @@ La verificación **de terceros/ciega NO se ha ejecutado**. La única puerta que 
 ciclo R3 son lecturas independientes — abre o comenta
 [el issue #1](https://github.com/LexLuthorPrimero/rxre-cleanroom/issues/1).
 
-## Verifica en un comando (v1.3.0)
+## Verifica en un comando (v1.3.2)
 
 ```sh
 git clone https://github.com/LexLuthorPrimero/rxre-cleanroom
@@ -42,7 +42,7 @@ gcc -std=c11 -O2 -o verify2 harness/verify2.c src/filenvercmp.c
 # total=34145 mismatches=0
 ```
 
-**Novedad v1.3.0**: `verify.sh` único; matrices de locale selladas (`oracle/matrix_native_es_AR_utf8{,_20261113}.txt`); textos coherentes con el paquete hermano. Verificación de terceros sigue **NOT_EXECUTED** (issue #1). Los corpora `--files0-from` permanecen sellados en `wc/SEAL_WC.txt` pero las 5.200 fichas sintéticas no se redistribuyen: esa rama no es reejecutable desde un clon fresco (documentado en el paso 8/8 de `verify.sh`).
+**v1.3.2**: alineado con `rxre-engine v1.3.2` (audit-hardening F1–F4 + Phase 5 decoupling; paquete limpio re-sellado; misma verificación fail-closed). **Novedad v1.3.0**: `verify.sh` único; matrices de locale selladas (`oracle/matrix_native_es_AR_utf8{,_20261113}.txt`); textos coherentes con el paquete hermano. Verificación de terceros sigue **NOT_EXECUTED** (issue #1). Los corpora `--files0-from` permanecen sellados en `wc/SEAL_WC.txt` pero las 5.200 fichas sintéticas no se redistribuyen: esa rama no es reejecutable desde un clon fresco (documentado en el paso 8/8 de `verify.sh`).
 
 ## Contenido
 
@@ -77,5 +77,5 @@ Verificación fresca (clone nuevo, sin estado previo) — todos los runs dan `0 
 
 ## Proyectos relacionados
 
-- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.3.0](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.3.0) (zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
+- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.3.2](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.3.2) (snapshot actual: audit-hardening F1–F4 + Phase 5; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
 - Protocolo seal-before-reveal y roadmap: `PROTOCOL.md`, `OUTREACH.md` (cómo reportar en issue #1)
