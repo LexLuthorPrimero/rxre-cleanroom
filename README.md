@@ -42,7 +42,7 @@ gcc -std=c11 -O2 -o verify2 harness/verify2.c src/filenvercmp.c
 # total=34145 mismatches=0
 ```
 
-**v1.5.1**: coherencia con `rxre-engine v1.5.1` (README y QUICKSTART sincronizados; motor espera ahora 72 passed/2 skipped). **v1.5.0**: **FIVE bounded targets** sellados (filenvercmp, wc, fold, tr, **dirname** — 1.917/1.901, 0 divergencias). **v1.3.8**: fold multi-width (6 gated regens). **Novedad v1.3.0**: `verify.sh` único; matrices de locale selladas. Los corpora `--files0-from` permanecen en zona 9/10 con fichas sintéticas no redistribuidas. Verificación de terceros sigue **NOT_EXECUTED** (issue #1).
+**v1.5.3**: coherencia con `rxre-engine v1.5.3` (honestly, content identical to v1.5.1+README pointer) (README y QUICKSTART sincronizados; motor espera ahora 72 passed/2 skipped). **v1.5.0**: **FIVE bounded targets** sellados (filenvercmp, wc, fold, tr, **dirname** — 1.917/1.901, 0 divergencias). **v1.3.8**: fold multi-width (6 gated regens). **Novedad v1.3.0**: `verify.sh` único; matrices de locale selladas. Los corpora `--files0-from` permanecen en zona 9/10 con fichas sintéticas no redistribuidas. Verificación de terceros sigue **NOT_EXECUTED** (issue #1).
 
 ## Contenido
 
@@ -80,5 +80,5 @@ Verificación fresca (clone nuevo, sin estado previo) — todos los runs dan `0 
 
 ## Proyectos relacionados
 
-- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.5.1](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.5.1) (snapshot actual: 4 bounded targets, verification fail-closed; verification fail-closed; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
+- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.5.3](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.5.3) (snapshot actual: 4 bounded targets, verification fail-closed; verification fail-closed; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
 - Protocolo seal-before-reveal y roadmap: `PROTOCOL.md`, `OUTREACH.md` (cómo reportar en issue #1)
