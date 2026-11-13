@@ -80,5 +80,5 @@ Verificación fresca (clone nuevo, sin estado previo) — todos los runs dan `0 
 
 ## Proyectos relacionados
 
-- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.7.0](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.7.0) (snapshot actual: 4 bounded targets, verification fail-closed; verification fail-closed; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
+- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.8.0](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.8.0) (snapshot actual: 4 bounded targets, verification fail-closed; verification fail-closed; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
 - Protocolo seal-before-reveal y roadmap: `PROTOCOL.md`, `OUTREACH.md` (cómo reportar en issue #1)
