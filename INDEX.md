@@ -1,6 +1,6 @@
 # RXRE clean-room — reconstrucción verificable de `filenvercmp` / `filevercmp`
 
-(Milestones sellados: filenvercmp, wc, fold, tr, dirname.)
+(Milestones sellados: filenvercmp, wc, fold, tr, dirname, basename.)
 
 Reconstrucción semántica, escrita a mano a partir del desensamblado de `/usr/bin/ls`
 (GNU coreutils 9.10), de la función `filenvercmp` y de sus subfunciones
@@ -53,7 +53,7 @@ kernel propio, regenerables con el harness hermano `verify2`. El índice especí
 Requisitos: `gcc` o `clang`, `python3`, un `/usr/bin/ls` compatible (misma versión si quieres comparar el oráculo; el diferencial contra matrices selladas no necesita `ls`).
 
 ```sh
-# 0) (v1.5.0) o simplemente:
+# 0) (v1.9.0) o simplemente:
 ./verify.sh    # pasos 1-7 + notas de alcance; mismo resultado
 
 # 1) comprueba el paquete

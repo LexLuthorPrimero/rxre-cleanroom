@@ -88,6 +88,7 @@ Locale-invariance filenvercmp: `wc/SEAL_H14.txt`.
 
 ## v1.5.0 (2026-11-13)
 
+- Alineado con `rxre-engine v1.9.0`: **SIX bounded targets** sellados (filenvercmp, wc, fold, tr, dirname, **basename**). basename: corpus 1.987/2.013 (seeds 20261114/15), último componente acotado, 0 divergencias; verify.sh 12 etapas con basename; identidad fail-closed /usr/bin/basename (1ef99139…). Terceros: NOT_EXECUTED (issue #1).
 - Alineado con `rxre-engine v1.5.0`: **FIVE bounded targets** sellados (filenvercmp, wc, fold, tr, **dirname**). dirname: corpus 1.917/1.901 (seeds 20261113/14), parent directory acotado (bounded); verify.sh 11 etapas con dirname; identidad fail-closed /usr/bin/dirname (aac6a889…). Terceros: NOT_EXECUTED (issue #1).
 
 ## v1.4.0 (2026-11-13)
