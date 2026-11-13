@@ -82,6 +82,10 @@ Locale-invariance filenvercmp: `wc/SEAL_H14.txt`.
 - `files0-from`: resultados sellados pero las fichas sintéticas NO se redistribuyen; documentado como no reejecutable desde clon.
 - Alineación de paquetes con `rxre-engine v1.3.0` (mismo día que su publicación). Verificación de terceros: NOT_EXECUTED (issue #1).
 
+## v1.3.4 (2026-11-13)
+
+- Alineado con `rxre-engine v1.3.4` (MENTE etapa 1). Sin cambios funcionales: corpus intacto, verify.sh intacto; solo coherencia. Terceros: NOT_EXECUTED (issue #1).
+
 ## v1.3.3 (2026-11-13)
 
 - Alineado con `rxre-engine v1.3.3` (cierre de la ronda 3 de auditoría estática). Sin cambios funcionales: mismo corpus sellado, `verify.sh` fail-closed, mismos hashes de oráculo. Solo coherencia y sellos regenerados. Verificación de terceros: NOT_EXECUTED (issue #1).
