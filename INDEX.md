@@ -51,7 +51,7 @@ kernel propio, regenerables con el harness hermano `verify2`. El índice especí
 Requisitos: `gcc` o `clang`, `python3`, un `/usr/bin/ls` compatible (misma versión si quieres comparar el oráculo; el diferencial contra matrices selladas no necesita `ls`).
 
 ```sh
-# 0) (v1.3.6) o simplemente:
+# 0) (v1.3.7) o simplemente:
 ./verify.sh    # pasos 1-7 + notas de alcance; mismo resultado
 
 # 1) comprueba el paquete
