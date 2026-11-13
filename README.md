@@ -18,7 +18,7 @@ La verificación **de terceros/ciega NO se ha ejecutado**. La única puerta que 
 ciclo R3 son lecturas independientes — abre o comenta
 [el issue #1](https://github.com/LexLuthorPrimero/rxre-cleanroom/issues/1).
 
-## Verifica en un comando (v1.3.2)
+## Verifica en un comando (v1.3.3)
 
 ```sh
 git clone https://github.com/LexLuthorPrimero/rxre-cleanroom
@@ -77,5 +77,5 @@ Verificación fresca (clone nuevo, sin estado previo) — todos los runs dan `0 
 
 ## Proyectos relacionados
 
-- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.3.2](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.3.2) (snapshot actual: audit-hardening F1–F4 + Phase 5; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
+- Motor RXRE (área de investigación, MIT): https://github.com/LexLuthorPrimero/rxre-engine — release [v1.3.3](https://github.com/LexLuthorPrimero/rxre-engine/releases/tag/v1.3.3) (snapshot actual: audit-hardening F1–F4 + Phase 5; zip hash-verificado; incluye [`reviewer-kit/`](https://github.com/LexLuthorPrimero/rxre-engine/tree/main/reviewer-kit) para revisión ciega)
 - Protocolo seal-before-reveal y roadmap: `PROTOCOL.md`, `OUTREACH.md` (cómo reportar en issue #1)

@@ -1,5 +1,5 @@
 #!/bin/sh
-# verify.sh — rxre-cleanroom v1.3.2 — verificación única, fail-closed.
+# verify.sh — rxre-cleanroom v1.3.3 — verificación única, fail-closed.
 # Reproduce: integridad del paquete, identidad nativa del oráculo, build +
 # diferencial (2 generaciones + challenge corpus), invariancia de locale,
 # i18n black-box y los 11 corpora de wc. Tolerancia cero: un mismatch aborta.
