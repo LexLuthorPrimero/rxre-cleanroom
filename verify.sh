@@ -1,19 +1,20 @@
 #!/bin/sh
-# verify.sh — rxre-cleanroom v1.4.0 — verificación única (fold multi-width), fail-closed.
+# verify.sh — rxre-cleanroom v1.5.0 — verificación única, fail-closed.
 # Reproduce: integridad del paquete, identidad nativa del oráculo, build +
 # diferencial (2 generaciones + challenge corpus), invariancia de locale,
-# i18n black-box, los 11 corpora de wc, "fold -w N" (etapa 3) y "tr -s x" (etapa 5).
+# i18n black-box, los 11 corpora de wc, "fold -w N" (etapa 3), "tr -s x" (etapa 5),
+# y "dirname" (etapa 5-bis).
 # Tolerancia cero: un mismatch aborta.
 set -e
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT HUP INT TERM
 
-echo "== 1/10  paquete: integridad SHA256SUMS (raíz + wc/) =="
+echo "== 1/11  paquete: integridad SHA256SUMS (raíz + wc/) =="
 ( cd "$ROOT" && sha256sum -c SHA256SUMS )
 ( cd "$ROOT" && sha256sum -c wc/SHA256SUMS )
 
-echo "== 2/10  identidad nativa del oráculo (fail-closed) =="
+echo "== 2/11  identidad nativa del oráculo (fail-closed) =="
 LS_ID=54e936d37decdad9ecaf189b1de347605a0a99037ec87bd17679b6cbde871a0c
 WC_ID=81d614595c717be908fce809713702efd35ce5a56f5ab7cbc497d1a61eb1a38f
 FOLD_ID=9503046131ed5070acca13388497241d213cb8d7f9d096fd1dcecacd0bc325d7
@@ -34,24 +35,29 @@ a_tr=$(sha256sum /usr/bin/tr | cut -d' ' -f1)
 if [ "$a_tr" != "$TR_ID" ]; then
   echo "FAIL: /usr/bin/tr ($a_tr) no coincide con el sello $TR_ID — aborta"; exit 3
 fi
-echo "native identity OK: /usr/bin/ls=$a_ls /usr/bin/wc=$a_wc /usr/bin/fold=$a_fold /usr/bin/tr=$a_tr"
+DIRNAME_ID=aac6a889dcfe1bcaabdcfea17b89c643c29abee5efce3fafbbb0c34b70e864a7
+a_dirname=$(sha256sum /usr/bin/dirname | cut -d' ' -f1)
+if [ "$a_dirname" != "$DIRNAME_ID" ]; then
+  echo "FAIL: /usr/bin/dirname ($a_dirname) no coincide con el sello $DIRNAME_ID — aborta"; exit 3
+fi
+echo "native identity OK: /usr/bin/ls=$a_ls /usr/bin/wc=$a_wc /usr/bin/fold=$a_fold /usr/bin/tr=$a_tr /usr/bin/dirname=$a_dirname"
 
-echo "== 3/10  build de la reconstrucción + harness =="
+echo "== 3/11  build de la reconstrucción + harness =="
 gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/verify2" "$ROOT/harness/verify2.c" "$ROOT/src/filenvercmp.c"
 echo "build OK (gcc -O2, -Wall -Wextra -Werror)"
 
-echo "== 4/10  filenvercmp: 2 generaciones selladas + challenge corpus =="
+echo "== 4/11  filenvercmp: 2 generaciones selladas + challenge corpus =="
 "$TMP/verify2" "$ROOT/oracle/cases_seed20261112.txt" "$ROOT/oracle/matrix_native.txt"
 "$TMP/verify2" "$ROOT/oracle/cases_seed20261113.txt" "$ROOT/oracle/matrix_native_20261113.txt"
 "$TMP/verify2" "$ROOT/oracle/cases_challenge_seed20261126.txt" "$ROOT/oracle/matrix_challenge.txt"
 "$TMP/verify2" "$ROOT/oracle/cases_challenge_b_seed20261126.txt" "$ROOT/oracle/matrix_challenge_b.txt"
 
-echo "== 5/10  locale invariance (C ≡ es_AR.utf8, ambas generaciones, byte-equal) =="
+echo "== 5/11  locale invariance (C ≡ es_AR.utf8, ambas generaciones, byte-equal) =="
 cmp "$ROOT/oracle/matrix_native.txt" "$ROOT/oracle/matrix_native_es_AR_utf8.txt"
 cmp "$ROOT/oracle/matrix_native_20261113.txt" "$ROOT/oracle/matrix_native_es_AR_utf8_20261113.txt"
 echo "locale invariance OK (gen 1, gen 2 byte-equal)"
 
-echo "== 6/10  filenvercmp i18n black-box (200 nombres UTF-8 vs oráculo/ls -v) =="
+echo "== 6/11  filenvercmp i18n black-box (200 nombres UTF-8 vs oráculo/ls -v) =="
 gcc -std=c11 -Wall -Wextra -Werror -pedantic -O2 -I "$ROOT/src" -o "$TMP/sort_names" \
   "$ROOT/filenvercmp_i18n/sort_names.c" "$ROOT/src/filenvercmp.c"
 "$TMP/sort_names" "$ROOT/filenvercmp_i18n/names_i18n.txt" > "$TMP/i18n.out"
@@ -59,7 +65,7 @@ cmp "$TMP/i18n.out" "$ROOT/filenvercmp_i18n/oracle_lsAv_i18n.txt"
 cmp "$TMP/i18n.out" "$ROOT/filenvercmp_i18n/reconstructed_sorted_i18n.txt"
 echo "i18n black-box OK (byte-identical)"
 
-echo "== 7/10 fold — etapa 3 (cell width): build + 6 gated regens vs oracle =="
+echo "== 7/11 fold — etapa 3 (cell width): build + 6 gated regens vs oracle =="
 gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/foldwrap" fold_20261113/foldwrap.c
 "$TMP/foldwrap" fold_20261113/cases_fold_seed20261113.txt 4
 "$TMP/foldwrap" fold_20261113/cases_fold_seed20261114.txt 4
@@ -72,12 +78,17 @@ gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/foldwrap" fold_20261113/foldwrap
 "$TMP/foldwrap" fold_20261113/cases_fold_w3_seed20261117.txt 3
 "$TMP/foldwrap" fold_20261113/cases_fold_w8_seed20261122.txt 8
 
-echo "== 8/10 tr — etapa 5 (squeeze): build + 2 gens vs oracle =="
+echo "== 8/11 tr — etapa 5 (squeeze): build + 2 gens vs oracle =="
 gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/trwrap" tr_20261113/trwrap.c
 "$TMP/trwrap" tr_20261113/cases_tr_seed20261113.txt verify
 "$TMP/trwrap" tr_20261113/cases_tr_seed20261114.txt verify
 
-echo "== 9/10 wc: build + 11 corpora (LC_ALL=C y es_AR.utf8) =="
+echo "== 9/11 dirname — etapa 5-bis: build + 2 gens vs oracle =="
+gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/denwrap" dirname_20261113/denwrap.c
+"$TMP/denwrap" dirname_20261113/cases_dirname_seed20261113.txt verify
+"$TMP/denwrap" dirname_20261113/cases_dirname_seed20261114.txt verify
+
+echo "== 10/11 wc: build + 11 corpora (LC_ALL=C y es_AR.utf8) =="
 gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/verify_wc" "$ROOT/wc/src/wc_count.c" "$ROOT/wc/harness/verify_wc.c"
 gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/verify_m" "$ROOT/wc/src/wc_count.c" "$ROOT/wc/harness/verify_m.c"
 gcc -std=c11 -Wall -Wextra -Werror -O2 -o "$TMP/verify_L" "$ROOT/wc/src/wc_count.c" "$ROOT/wc/harness/verify_L.c"
@@ -94,7 +105,7 @@ LC_ALL=es_AR.utf8 "$TMP/verify_m"     "$ROOT/wc/corpus/cases_m_utf8_seed20261121
 LC_ALL=es_AR.utf8 "$TMP/verify_L"     "$ROOT/wc/corpus/cases_L_utf8_seed20261123.txt"  "$ROOT/wc/corpus/matrix_native_L_utf8.txt"  utf8
 LC_ALL=es_AR.utf8 "$TMP/verify_flags" "$ROOT/wc/corpus/cases_flags_utf8_seed20261125.txt" "$ROOT/wc/corpus/matrix_flags_utf8.txt"   utf8
 
-echo "== 10/10 alcance honesto =="
+echo "== 11/11 alcance honesto =="
 echo "verificación propia del autor, un único host/UID; verificación de terceros: NOT_EXECUTED (issue #1)"
 echo "corpora --files0-from sellados (3.000 sintéticos, hitos 15-17): registros en wc/SEAL_WC.txt;"
 echo "las 3.000+2.200 fichas sintéticas no se redistribuyen, así que esa rama NO es reejecutable desde este clon."
