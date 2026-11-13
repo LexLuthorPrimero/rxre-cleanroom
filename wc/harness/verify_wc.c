@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdarg.h>
-typedef struct { unsigned long lines, words, bytes, max_line; } wc_count;
+typedef struct { unsigned long lines, words, bytes, max_line, chars; } wc_count;
 wc_count wc_count_str(const unsigned char *, size_t);
 size_t wc_format_flags(char *, size_t, wc_count, unsigned);
 
@@ -46,6 +46,7 @@ static unsigned parse_flags(const char *f, size_t len) {
                 else if (f[i] == 'w') bits |= 2;
                 else if (f[i] == 'c') bits |= 4;
                 else if (f[i] == 'L') bits |= 8;
+                else if (f[i] == 'm') bits |= 16;
                 i++;
             }
         } else i++;

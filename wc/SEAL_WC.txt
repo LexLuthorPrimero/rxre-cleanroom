@@ -154,3 +154,48 @@ Probes nativos LC_ALL=es_AR.utf8:
   'aébéc\n'                       → L=5   (modelo: 5 ✓)
 -límite del modelo UTF-8: el ancho de chars de ancho doble (CJK, U+4E00...) es 2 en wcwidth pero nuestro modelo da 1.
 Not_EXECUTED: anchos Unicode completos (wcwidth) — requiere tabla de ancho Unicode; multibyte -L del corpus completo no es verificado exhaustivamente (sólo probes puntuales).
+
+## Hito 9 — wc -m (chars) multibyte en es_AR.utf8: seal-before-reveal  [2026-11-13]
+Corpus:  gen_wc_utf8char_cases.py 20261121 → wc/corpus/cases_m_utf8_seed20261121.txt
+sha256:  2a2fae5213ec9f531a4a0b47cb8bc7be107bc48e2f511852ab89b57af4c80585
+cases:   1526 (ASCII + UTF-8 válido de 2/3/4 bytes; combinantes NFC/NFD; emoji; ZWSP; unassigned)
+Sello: corpus ANTES del oráculo (2026-11-13 03:37 UTC aprox.).
+
+Oráculo: LC_ALL=es_AR.utf8 wc -m → wc/corpus/matrix_native_m_utf8.txt
+sha256:  8e85e0f525b13acb962f80e198387f32df001dd95f0b7c28e890b7b96e2bd881
+cases:  1526 · CRASH: 0
+
+Modelo: wc_count_str extendido con campo chars (count_utf8 cuenta codepoints; count_c chars=bytes
+(MB_CUR_MAX=1)). Verificador portado en este repo: wc/harness/verify_m.c (misma API pública wc_count_str).
+
+Verificación diferencial (local, fresh build):
+- UTF-8 path: total=1526 mismatches=0 (exit=0)
+- Discriminación (bytes-as-chars): 1499/1526 casos fallan
+- Fuzz diagnóstico (no sellado): 2000/2000 en la instancia privada
+
+## Hito 10 — wc -L multibyte (ancho real Unicode) en es_AR.utf8: seal-before-reveal  [2026-11-13]
+Objetivo: cerrar el hueco histórico: -L multibyte sólo puntual (hito 8) → exhaustivo en este dominio.
+Corpus:  gen_wc_L_utf8_cases.py 20261123 → wc/corpus/cases_L_utf8_seed20261123.txt
+sha256:  44f292c1af43f77cfc06c59ae076aabdc3eeb67284d96ad7cf50502c361c92b0
+cases:   1523 (Mn/ME, CJK, U+3000, full/halfwidth, emoji, ZWSP, isolates, jamo conjoining Hangul, unassigned)
+Sello: corpus ANTES del oráculo (2026-11-13 04:11 UTC aprox.).
+
+Oráculo: LC_ALL=es_AR.utf8 wc -L → wc/corpus/matrix_native_L_utf8.txt
+sha256:  545c469fbed14f3d6622366ac1b713e5186d08627dc9e11be9897e0e6f32d29f
+cases:  1523 · CRASH: 0
+
+Modelo: wc_count_str con cp_width() (binary search) sobre wc_width_table_gen.h (generado, Unicode 15.1):
+  - wc_width_table_gen.h valida 1:1 contra wcwidth(3) de ESTA glibc para los 292.531 codepoints asignados (mismatch=0);
+  - cero: Mn|Me|Cc|Cn|jamo conjoining|2028/2029|3164|FFA0; 2: W/F asignados + 0x3248..324F; 1: resto;
+  - excepciones: U+00AD y 32 Cf visibles → 1.
+Verificador portado en este repo: wc/harness/verify_L.c.
+
+Verificación diferencial (local, fresh build):
+- UTF-8 path: total=1523 mismatches=0 (exit=0)
+- Discriminación (modelo viejo width=1 para todo): 1265/1523 casos fallan
+- Fuzz válido (diagnóstico privado, no sellado): 1457/1457 tras corregir un bug del generador (corpus inválido descartado)
+
+Notas/honestidad:
+- Corpus sólo UTF-8 válido. En UTF-8 inválido (secuencias re-sincronizadas) el nativo y el modelo divergen → NOT_EXECUTED / fuera de alcance.
+- La tabla de anchura corresponde a ESTA glibc; NO es garantía portable Unicode.
+- -m multibyte cerrado; -L multibyte cerrado en este dominio; otros locales sin verificar. Terceros = 0 informes (issue #1).
