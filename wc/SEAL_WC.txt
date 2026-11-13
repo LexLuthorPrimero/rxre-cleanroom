@@ -199,3 +199,24 @@ Notas/honestidad:
 - Corpus sólo UTF-8 válido. En UTF-8 inválido (secuencias re-sincronizadas) el nativo y el modelo divergen → NOT_EXECUTED / fuera de alcance.
 - La tabla de anchura corresponde a ESTA glibc; NO es garantía portable Unicode.
 - -m multibyte cerrado; -L multibyte cerrado en este dominio; otros locales sin verificar. Terceros = 0 informes (issue #1).
+
+## Hito 11 — flags × multibyte UTF-8 en es_AR.utf8: seal-before-reveal  [2026-11-13]
+Corpus:  gen_wc_flags_utf8_cases.py 20261125 → wc/corpus/cases_flags_utf8_seed20261125.txt
+sha256:  717edeb65a41557d6701dbd10bd52dc86e238dddb9ab9edb2f1d2be9a227c604
+cases:   18592 (14 sets de flags × contenidos multibyte; formato "<flags>\t<content>")
+Sello: corpus ANTES del oráculo (2026-11-13 05:02 UTC aprox.).
+Orden GNU observado empíricamente (2026-11-13): L W M C L.
+
+Oráculo: LC_ALL=es_AR.utf8 wc <flags> (stdin) → wc/corpus/matrix_flags_utf8.txt
+sha256:  29cfa79734977bbcb34e3232972bcc6064e32034cc3a1a47e5c15f9b0c37b21a
+cases:  18592 · CRASH: 0
+
+Verificador público portado en este repo: wc/harness/verify_flags.c (misma API pública wc_count_str + wc_format_flags).
+
+Verificación diferencial (local, fresh build):
+- UTF-8 path: total=18592 mismatches=0 (exit=0)
+- Discriminación (modelo sin tabla de ancho, hito m9): 4960/18592 divergencias
+
+Notas/honestidad:
+- UTF-8 inválido: nativo y modelo divergen → fuera de alcance (documentado).
+- Otros locales: NOT_EXECUTED. Terceros = 0 informes (issue #1).

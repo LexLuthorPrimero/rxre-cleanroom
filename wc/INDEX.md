@@ -19,6 +19,7 @@ Binario objetivo: sha256 `81d614595c717be908fce809713702efd35ce5a56f5ab7cbc497d1
 | -m (chars) en UTF-8 (multibyte, 1.526 casos) | seed 20261121 | — | 0 (verify_m) |
 | -L (anchura real Unicode: combinantes=0, East-Asian Wide/Fullwidth=2) | seed 20261123 (1.523) | — | 0 (verify_L) |
 | -m observado == bytes en LC_ALL=C | 4 corpora verificados + 20261119 (4.926/4.926) | 0 | — |
+| flags × multibyte (14 sets × contenidos) | seed 20261125 (18.592) | — | 0 (verify_flags) |
 | Byte-clasificación LC_ALL=C 0–255 | probe nativo | 0 | — |
 
 La tabla de anchura Unicode (`wc/src/wc_width_table_gen.h`, generada) fue verificada 1:1 contra
@@ -62,6 +63,9 @@ gcc -std=c11 -O2 -o verify_m wc/src/wc_count.c wc/harness/verify_m.c
 gcc -std=c11 -O2 -o verify_L wc/src/wc_count.c wc/harness/verify_L.c
 ./verify_L wc/corpus/cases_L_utf8_seed20261123.txt wc/corpus/matrix_native_L_utf8.txt utf8
 # esperado: total=1523 mismatches=0
+gcc -std=c11 -O2 -o verify_flags wc/src/wc_count.c wc/harness/verify_flags.c
+./verify_flags wc/corpus/cases_flags_utf8_seed20261125.txt wc/corpus/matrix_flags_utf8.txt utf8
+# esperado: total=18592 mismatches=0
 ```
 
 El modo explícito (C|utf8) fuerza la ruta de clasificación — usa el que coincide con la generación
